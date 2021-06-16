@@ -36,9 +36,11 @@
                             <?php else: ?>
                         <td><img src="<?php echo PATH_URL ?>/img_user/Avatar.png" alt="imagen usuario por defecto"></td>
                             <?php endif; ?>
-                        <td><a href="<?php echo PATH_URL ?>/Users/editUser&id=<?php echo $user->id_usuario; ?>"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="<?php echo PATH_URL ?>/Users/deleteUser&id=<?php echo $user->id_usuario; ?>"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><a href="<?php echo PATH_URL ?>/Users/editUser&i=<?=  Controller::encryption($user->id_usuario); ?>"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="<?php echo PATH_URL ?>/Users/deleteUser&i=<?= Controller::encryption($user->id_usuario); ?>"><i class="fas fa-trash-alt"></i></a></td>
                        
+
+                        
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

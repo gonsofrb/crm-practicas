@@ -25,6 +25,17 @@ class Users extends Controller{
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             
             $errors = array();
+
+            //! NO FUNCIONA, FALTA EL ID   Comprobar el usuario en la BD
+               
+         $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id' LIMIT 1 ");
+
+         if($check_user->rowCount()<0){
+                array_push($errors,"El usuario no se encuentra en el sistema.");
+         }else{
+            
+             $field=$check_user->fetch(PDO::FETCH_ASSOC);
+         }
                          
             if(isset($_FILES['image'])){
                 $file = $_FILES['image'];
@@ -70,6 +81,24 @@ class Users extends Controller{
                 array_push($errors, "Debe rellenar todos los campos obligatorios, por favor.");
                 }
 
+                if($user!=$field['nombre_usu']){
+                    
+                    $check_user=$this->UsersModel->simple_query("SELECT nombre_usu FROM usuarios WHERE nombre_usu='$user'");
+                    if($check_user->rowCount()>0){
+                        array_push($errors, "El nombre de usuario ya se encuentra registrado.");
+                    }
+
+                }
+
+                if($email!=$field['email']){
+                    $check_email=$this->UsersModel->simple_query("SELECT email FROM usuarios WHERE email='$email'");
+                    if($check_email->rowCount()>0){
+                        array_push($errors, "El email ya se encuentra registrado.");
+                    }
+
+                }
+
+
                 //Validación campo email
                 if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
                     array_push($errors,"El correo no es válido.");
@@ -98,42 +127,46 @@ class Users extends Controller{
 
                         if($new_user->rowCount()==1){
                             $_SESSION['register_complete']="Registro de usuario completado.";
-                            $this->view('pages/user/add');
+                            $this->view('pages/user/add',$data);
                             exit();
                         }
 
                     }else{
-                        echo "validacion error";
+                        
                         
                         $_SESSION['error_register'] = $errors;
 
-                        $this->view('pages/user/add');
+                        $data= [
+                            'name'=>$name,
+                            'user'=>$user,
+                            'password'=>$password_segura,
+                            'rol'=>$rol,
+                            'company'=>$company,
+                            'email'=>$email,
+                            'telephone'=>$telephone,
+                            'image'=>$name_file 
+                        ];
+
+                        $this->view('pages/user/add',$data);
                         exit();
                          }
       
 
 
         }else{
-            $data = [
-                'name'=>'',
-                'user'=>'',
-                'password'=>'',
-                'rol'=>'',
-                'company'=>'',
-                'email'=>'',
-                'telephone'=>'',
-                'image'=>''
-
-            ];
-            $this->view('pages/user/add');
+            
+            $this->view('pages/user/add',$data=null);
         }
     }
 
 
     //Método para editar un usuario
     public function editUser(){
-        if(isset($_GET['id'])){
-            $id=$_GET['id'];
+        if(isset($_GET['i'])){
+            $id=Controller::descryption($_GET['i']);
+
+            
+
             $user = $this->UsersModel->userForId($id);
            
             $data = [
@@ -148,12 +181,14 @@ class Users extends Controller{
             ];
 
             $this->view('pages/user/edit',$data);
+        }else{
+            redirect('/Users/see/');
         }
     }
     //Método para borrar un usuario
     public function deleteUser(){
         if($_SERVER['REQUEST_METHOD'] =='GET'){
-            $id_user = $_GET['id'];
+            $id_user = Controller::descryption($_GET['i']);
             $this->UsersModel->deleteForId($id_user);
 
             redirect('/Users/see/');
@@ -162,11 +197,22 @@ class Users extends Controller{
 
 
 
-    //Método para guardar un cliente editado
+    //Método para guardar un usuario editado
     public function saveUser(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $id=$_POST['edit_user_id'];
             $errors = array();
+
+            //Comprobar el usuario en la BD
+               
+         $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id' LIMIT 1 ");
+
+         if($check_user->rowCount()<0){
+                array_push($errors,"El usuario no se encuentra en el sistema.");
+         }else{
+            
+             $field=$check_user->fetch(PDO::FETCH_ASSOC);
+         }
 
             if(isset($_FILES['image'])){
                 $file = $_FILES['image'];
@@ -214,6 +260,24 @@ class Users extends Controller{
                 }
 
 
+                if($user!=$field['nombre_usu']){
+                    
+                    $check_user=$this->UsersModel->simple_query("SELECT nombre_usu FROM usuarios WHERE nombre_usu='$user'");
+                    if($check_user->rowCount()>0){
+                        array_push($errors, "El nombre de usuario ya se encuentra registrado.");
+                    }
+
+                }
+
+                if($email!=$field['email']){
+                    $check_email=$this->UsersModel->simple_query("SELECT email FROM usuarios WHERE email='$email'");
+                    if($check_email->rowCount()>0){
+                        array_push($errors, "El email ya se encuentra registrado.");
+                    }
+
+                }
+
+
                 //Validación campo email
                 if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
                     array_push($errors,"El correo no es válido.");
@@ -226,8 +290,10 @@ class Users extends Controller{
 
 
 
+
                 if(count($errors) == 0){
 
+                   
                         $data = [
                             'id'=>$id,
                             'name' =>$name,
@@ -241,14 +307,16 @@ class Users extends Controller{
                         ];
 
 
-                        $dit_user = $this->UsersModel->updateUser($data);
-                        if($edit_data){
+                        $edit_user = $this->UsersModel->updateUser($data);
+                        if($edit_user){
                             $_SESSION['edit_complete'] = "Los datos del usuario han sido actualizados.";
 
+                                $this->view('pages/user/edit',$data);
 
                         }else{
                             array_push($errors,"No se han podido actualizar los datos del usuario.");
                             $_SESSION['error_edit'] = $errors;
+                            $this->view('pages/user/edit',$data=null);
                         }
 
 
@@ -256,6 +324,20 @@ class Users extends Controller{
 
                 }else{
                     $_SESSION['error_edit'] = $errors;
+
+                    $data = [
+                        'id'=>$id,
+                        'name' =>$name,
+                        'user' =>$user,
+                        'rol' =>$rol,
+                        'company' =>$company,
+                        'email' =>$email,
+                        'telephone' =>$telephone,
+                        'image' =>$name_file
+        
+                    ];
+
+                    $this->view('pages/user/edit',$data);
                 }
         }
     }

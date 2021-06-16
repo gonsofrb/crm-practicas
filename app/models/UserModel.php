@@ -83,7 +83,7 @@ class UserModel{
         $pst = $this->db->query($sql);
         $pst->execute();
        
-        return $sql;
+        return $pst;
     }
 
 }

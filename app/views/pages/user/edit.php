@@ -24,26 +24,26 @@
                     
                 
                     <label for="name">Nombre:</label>
-                    <input type="text" name="name"  value="<?php echo $data['name'] ? $data['name'] : ''; ?>" required="" >
+                    <input type="text" name="name"  value="<?=  $data['name'] ? $data['name'] : ''; ?>" required="" >
                 
                 
                     <label for="user">Usuario:</label>
-                    <input type="text" name="user" value="<?php echo $data['user'] ? $data['user'] : '' ?>">
+                    <input type="text" name="user" value="<?= $data['user'] ? $data['user'] : '' ?>">
 
                     <label for="rol">Rol:</label>
-                    <input type="number" name="rol" value="<?php echo $data['rol'] ? $data['rol'] : ''; ?>" required="">
+                    <input type="number" name="rol" value="<?= $data['rol'] ? $data['rol'] : ''; ?>" required="">
 
                     <label for="company">Empresa:</label>
-                    <input type="text" name="company" value="<?php echo $data['company'] ? $data['company'] : ''; ?>" required="">
+                    <input type="text" name="company" value="<?= $data['company'] ? $data['company'] : ''; ?>" required="">
 
                     <label for="email">Email:</label>
-                    <input type="email" name="email" value="<?php echo $data['email'] ? $data['email'] : ''; ?>" required="">
+                    <input type="email" name="email" value="<?= $data['email'] ? $data['email'] : ''; ?>" required="">
 
                     <label for="telephone">Telefono:</label>
-                    <input type="text" name="telephone" value="<?php echo $data['telephone'] ? $data['telephone'] : ''; ?>" required="">
+                    <input type="text" name="telephone" value="<?= $data['telephone'] ? $data['telephone'] : ''; ?>" required="">
 
                     <label for="image">Imagen:</label>
-                    <input type="file" name="image" accept=".jpg, .jpeg, .png, .gif" value="<?php   echo $data['image'] ?  $data['image'] : '' ;?>">
+                    <input type="file" name="image" accept=".jpg, .jpeg, .png, .gif" value="<?= $data['image'] ?  $data['image'] : '' ;?>">
                 
                    
                     <input type="submit" value="Enviar">

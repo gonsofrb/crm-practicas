@@ -23,7 +23,7 @@
         
         ?>
         <h2 class="login-header">ACCESO RESTRINGIDO</h2>
-        <?php print_r($_SESSION); ?>
+        
 
         <form class="login-contenedor" action="<?php echo PATH_URL ?>/Login/start/" method="POST">
           <p><label for="user_log"><i class="fas fa-user-secret"></i>&nbsp;Usuario</label></p>
