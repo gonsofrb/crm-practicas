@@ -26,16 +26,7 @@ class Users extends Controller{
             
             $errors = array();
 
-            //! NO FUNCIONA, FALTA EL ID   Comprobar el usuario en la BD
-               
-         $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id' LIMIT 1 ");
-
-         if($check_user->rowCount()<0){
-                array_push($errors,"El usuario no se encuentra en el sistema.");
-         }else{
             
-             $field=$check_user->fetch(PDO::FETCH_ASSOC);
-         }
                          
             if(isset($_FILES['image'])){
                 $file = $_FILES['image'];
@@ -81,23 +72,17 @@ class Users extends Controller{
                 array_push($errors, "Debe rellenar todos los campos obligatorios, por favor.");
                 }
 
-                if($user!=$field['nombre_usu']){
-                    
-                    $check_user=$this->UsersModel->simple_query("SELECT nombre_usu FROM usuarios WHERE nombre_usu='$user'");
-                    if($check_user->rowCount()>0){
-                        array_push($errors, "El nombre de usuario ya se encuentra registrado.");
-                    }
-
+                //Comprobamos que no exista el usuario en la BD
+                $check_user = $this->UsersModel->simple_query("SELECT nombre_usu FROM usuarios WHERE nombre_usu='$user'");
+                if($check_user->rowCount()>0){
+                    array_push($errors,"El usuario ya se encuentra registrado en el sistema.");
                 }
 
-                if($email!=$field['email']){
-                    $check_email=$this->UsersModel->simple_query("SELECT email FROM usuarios WHERE email='$email'");
-                    if($check_email->rowCount()>0){
-                        array_push($errors, "El email ya se encuentra registrado.");
-                    }
-
+                //Comprobamos que no exista el email en la BD
+                $check_email = $this->UsersModel->simple_query("SELECT email FROM usuarios WHERE email='$email'");
+                if($check_email->rowCount()>0){
+                    array_push($errors,"El email ya se encuentra registrado en el sistema.");
                 }
-
 
                 //Validación campo email
                 if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
@@ -164,23 +149,35 @@ class Users extends Controller{
     public function editUser(){
         if(isset($_GET['i'])){
             $id=Controller::descryption($_GET['i']);
-
             
+        $errors = array();
+            //Comprobación de usuario en la BD
+            $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id'");
+            if($check_user->rowCount()>0){
+                $user = $this->UsersModel->userForId($id);
+                     $data = [
+                        'id'=>$id,
+                        'name'=>$user->nombre,
+                        'user'=>$user->nombre_usu,
+                        'rol'=>$user->rol,
+                        'company'=>$user->empresa,
+                        'email'=>$user->email,
+                        'telephone'=>$user->telefono,
+                        'image'=>$user->imagen
+                    ];
 
-            $user = $this->UsersModel->userForId($id);
-           
-            $data = [
-                'id'=>$id,
-                'name'=>$user->nombre,
-                'user'=>$user->nombre_usu,
-                'rol'=>$user->rol,
-                'company'=>$user->empresa,
-                'email'=>$user->email,
-                'telephone'=>$user->telefono,
-                'image'=>$user->imagen
-            ];
+                    $this->view('pages/user/edit',$data);
+                   
 
-            $this->view('pages/user/edit',$data);
+                }else{
+                   // array_push($errors,"Usuario no encontrado.");
+                    redirect('/Users/see/');
+                     
+                }
+                
+                   
+                
+                   
         }else{
             redirect('/Users/see/');
         }
@@ -203,9 +200,9 @@ class Users extends Controller{
             $id=$_POST['edit_user_id'];
             $errors = array();
 
+           
             //Comprobar el usuario en la BD
-               
-         $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id' LIMIT 1 ");
+            $check_user= $this->UsersModel->simple_query("SELECT * FROM usuarios WHERE id_usuario='$id' LIMIT 1 ");
 
          if($check_user->rowCount()<0){
                 array_push($errors,"El usuario no se encuentra en el sistema.");

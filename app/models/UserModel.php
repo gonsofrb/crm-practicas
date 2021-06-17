@@ -56,7 +56,7 @@ class UserModel{
 
     //Función para actulizar un usuario
     public function updateUser($data){
-        $pst = $this->db->prepare("UPDATE usuarios SET nombre=:name,nombre_usu=:user,rol=:rol,empresa=:company,email=:email,telefono=:telephone,imagen=:image");
+        $pst = $this->db->prepare("UPDATE usuarios SET nombre=:name,nombre_usu=:user,rol=:rol,empresa=:company,email=:email,telefono=:telephone,imagen=:image  WHERE id_usuario=:id");
 
         $pst->bindParam(":name",$data['name']);
         $pst->bindParam(":user",$data['user']);
@@ -65,6 +65,7 @@ class UserModel{
         $pst->bindParam(":email",$data['email']);
         $pst->bindParam(":telephone",$data['telephone']);
         $pst->bindParam(":image",$data['image']);
+        $pst->bindParam(":id",$data['id']);
 
         $pst->execute();
         return $pst;
