@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-05-2021 a las 10:49:06
+-- Tiempo de generación: 17-06-2021 a las 09:13:17
 -- Versión del servidor: 5.7.31
 -- Versión de PHP: 7.3.21
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `web` varchar(250) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -51,7 +51,10 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 INSERT INTO `clientes` (`id_cliente`, `logo`, `nombre_cliente`, `cif`, `direccion`, `pais`, `email`, `telefono`, `persona_contacto`, `notas`, `web`, `fecha_creacion`) VALUES
 (38, '', 'Telefónicaaaaa', 'B3456324C', 'C/San Marcos nº12 CP23456 Sevilla', 'España', 'telef@tele.es', 34955456734, 'Julián', '1ºNota', 'www.telef.com', '2021-05-26 18:53:14'),
 (39, '', 'Paula', 'j4444444j', 'Calle carcelera nº14 cp 23400 Sevilla', 'España', 'paula@pau.es', 3432345676, 'Julia Romero', 'No hay notas', 'www.pau.es', '2021-05-27 08:15:22'),
-(40, '', 'Rodolfo', 'f345678g', 'Calle Sanabria nº12 cp 21005 Huelva', 'España', 'rodolfo@rodof.es', 34567890987, 'Juan', 'No hay notas para añadir', 'www.rodolfo.com', '2021-05-26 19:25:24');
+(40, '', 'Rodolfo', 'f345678g', 'Calle Sanabria nº12 cp 21005 Huelva', 'España', 'rodolfo@rodof.es', 34567890987, 'Juan', 'No hay notas para añadir', 'www.rodolfo.com', '2021-05-26 19:25:24'),
+(114, '', 'nuevo cliente', 'sdafdsfads8', 'calle portillo', 'España', 'nuevo@nuevo.es', 23424234, 'Tomás', 'No hay notas', 'www.nuevo.es', '2021-06-14 08:45:59'),
+(115, '', 'nuevo1', 'sdfds4', 'sadfads', 'sadf', 'asdf@asdf.es', 345435, 'sadf', 'sadfda', 'sadfdasf', '2021-06-14 12:24:48'),
+(117, '', 'Lucarrrr', 'sdfsaf', 'sadfadsf', 'sdfsaf', 'sadf@asdfds.es', 34345435435, 'sadfdasf', 'asdfdsf', 'www.lucas.es', '2021-06-14 12:21:29');
 
 -- --------------------------------------------------------
 
@@ -71,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `notas` (
   PRIMARY KEY (`id_nota`),
   KEY `id_cliente` (`id_cliente`),
   KEY `asociado` (`asociado`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `tareas` (
   PRIMARY KEY (`id_tarea`),
   KEY `id_cliente` (`id_cliente`),
   KEY `proyecto_asociado` (`proyecto_asociado`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -135,29 +138,25 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
-  `nombre_usu` varchar(100) NOT NULL,
+  `nombre_usu` varchar(255) NOT NULL,
   `contrasena` varchar(250) NOT NULL,
   `rol` int(11) NOT NULL,
   `empresa` varchar(250) NOT NULL,
-  `email` varchar(250) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `telefono` bigint(11) NOT NULL,
   `imagen` varchar(250) DEFAULT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_usuario`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `nombre_usu` (`nombre_usu`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `nombre_usu`, `contrasena`, `rol`, `empresa`, `email`, `telefono`, `imagen`, `fecha_creacion`) VALUES
-(16, 'Rosa', 'Rosa23', '$2y$04$.MjpbTcUK/SfdJeF8B1noeHpCLodVgvKnJWd1pSUoHR.YIT7R2TsK', 1, 'Limpiezas Rosa', 'rosa@rosa.es', 5434, '', '2021-03-29 15:48:37'),
-(21, 'Antonio', 'Antonio23', '$2y$04$ewRWJNKNW/Yw1SDIRmTdtOw2B6Q/QjD7YPXwFEG5eUw7S0rpEBBdG', 1, 'Azulejos Antonio S.A', 'antonio@antonio.es', 34987654345, '', '2021-03-29 15:57:05'),
-(36, 'Manu', 'Manu', '$2y$04$5M3NaYV87kBLzyLtYKK0/eNmV0vqbSLCq6ijHt0keKQnvWTyZZ66G', 1, 'manu', 'manurodrih3@gmail.com', 876543456, '', '2021-04-07 08:14:52'),
-(53, 'Iker', 'Iker', '$2y$04$hI6YxPMx9GKtOQJgKE5HmO1/g.FmusZETvnLrnmdneD2IZtfM/tMy', 1, 'ikea', 'iker@iker.es', 34567876787, '', '2021-03-31 16:43:39'),
-(54, 'Mi', 'mi', '$2y$04$4/l3qFffcuvdpwTR8lZjleIVqyolnmQFyzMzd0jggR1HX8WBRg3kK', 1, 'Gurú', 'mi@mi.es', 34435435435, 'minion.jpg', '2021-04-15 09:05:27');
+(36, 'Manu', 'Manu', '$2y$04$5M3NaYV87kBLzyLtYKK0/eNmV0vqbSLCq6ijHt0keKQnvWTyZZ66G', 3, 'manu', 'manurodrih3@gmail.com', 876543456, '', '2021-06-17 07:27:59'),
+(53, 'Iker', 'Iker', '$2y$04$hI6YxPMx9GKtOQJgKE5HmO1/g.FmusZETvnLrnmdneD2IZtfM/tMy', 2, 'ikea', 'iker@iker.es', 34567876787, '', '2021-06-17 07:27:38'),
+(57, 'Admin', 'Admin', '$2y$04$Pu7ZlA2smKPUKo8D/8J/UO/A7wr1NiJU/wlpJMG3.jY6Q7MPYmwIq', 1, 'admin', 'admin@admin.es', 95933333333, '', '2021-06-16 14:29:51');
 
 --
 -- Restricciones para tablas volcadas

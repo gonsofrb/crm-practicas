@@ -12,18 +12,20 @@
 
 <body>  
       <div class="login">
+        
+        <h2 class="login-header">ACCESO RESTRINGIDO</h2>
         <?php 
         if(isset($_SESSION['error_session'])){
           
             foreach($_SESSION['error_session'] as $error) : ?>
-           <?php   echo "<p>".$error."</p>"; ?>
+           <?php   echo "<p>".$error."</p>"; 
+           
+                  Utils::deleteSession('error_session'); ?>
            <?php  endforeach;  
             
         }
         
         ?>
-        <h2 class="login-header">ACCESO RESTRINGIDO</h2>
-        
 
         <form class="login-contenedor" action="<?php echo PATH_URL ?>/Login/start/" method="POST">
           <p><label for="user_log"><i class="fas fa-user-secret"></i>&nbsp;Usuario</label></p>
@@ -33,7 +35,7 @@
           <!-- <p><input type="hidden" name="input_falso" id="input_falso" value="73343"></p> -->
           <p><input type="submit" name="enviar" value="Acceder" ></input></p>
           <p class="recuperar"><a href="#">¿Has olvidado la contrase&ntilde;a?</a></p>
-         
+        
         </form>
        
       </div>

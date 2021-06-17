@@ -67,7 +67,7 @@
                         }
 
                 }else{
-                   array_push($errors,"No existe ese usario en la base de datos.");
+                   array_push($errors,"No existe ese usuario en la base de datos.");
                    $_SESSION['error_session'] = $errors;
                    $this->view('pages/login/login');
                 }
@@ -77,7 +77,7 @@
 
             }else{
              
-             echo "vacio";
+           
               $_SESSION['error_session'] = $errors;
              // $this->view('pages/login/login');
               redirect('/Login/index/');
