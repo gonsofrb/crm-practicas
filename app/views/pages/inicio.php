@@ -15,15 +15,18 @@
                     <th>Prioridad</th>
                 </tr>
                 <!--Obtener tareas para hoy-->
-                <?php foreach($data['tasksToday'] as $taskToday) : ?>      
-                <tr>
-                    <td><?php echo $taskToday->nombre; ?></td>
-                    <td><?php echo $taskToday->descripcion; ?></td>
-                    <td><?php echo $taskToday->estado; ?></td>
-                    <td><?php echo $taskToday->prioridad; ?></td>
-                </tr>
-               <?php endforeach; ?>            
-               
+            <?php  if(!empty($data['tasksToday'])) :
+                     foreach($data['tasksToday'] as $taskToday) : ?>      
+                    <tr>
+                        <td><?= $taskToday->nombre_tarea; ?></td>
+                        <td><?= $taskToday->descripcion; ?></td>
+                        <td><?= $taskToday->estado; ?></td>
+                        <td><?= $taskToday->prioridad; ?></td>
+                    </tr>
+                <?php endforeach; ?>            
+           <?php  else:  ?>
+           <td><h2>NO HAY TAREAS PENDIENTES</h2></td>
+           <?php  endif; ?>    
             </table>
         </article>
         <article class="widget-tabla">
@@ -35,17 +38,20 @@
                     <th>Estado</th>
                     <th>Prioridad</th>
                 </tr>
+
                 <!--Obtener tareas pendientes durante 7 días-->
-                <?php foreach($data['tasks'] as $task) : ?>
+            <?php if(!empty($data['tasks'])) :
+                    foreach($data['tasks'] as $task) : ?>
                 <tr>
-                    <td><?php if(empty($task->nombre_tarea)){ echo 'No hay tarea';}else{$task->nombre_tarea;} ?></td>
-                    <td><?php echo $task->descripcion; ?></td>
-                    <td><?php echo $task->estado; ?></td>
-                    <td><?php echo $task->prioridad; ?></td>
+                    <td><?= $task->nombre_tarea; ?></td>
+                    <td><?= $task->descripcion; ?></td>
+                    <td><?= $task->estado; ?></td>
+                    <td><?= $task->prioridad; ?></td>
                 </tr>
                 <?php endforeach; ?>
-                           
-                       
+            <?php  else:    ?>            
+                <td><h2>NO HAY TAREAS PENDIENTES</h2></td>  
+            <?php endif; ?>          
             </table>
         </article>
     </div>
