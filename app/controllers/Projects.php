@@ -121,7 +121,7 @@
       //Método para borrar un proyecto
       public function deleteProject(){
         if($_SERVER['REQUEST_METHOD'] == 'GET'){
-          $id_project=$_GET['i'];
+          $id_project= Controller::descryption($_GET['i']);
 
           $this->ProjectsModel->deleteForId($id_project);
 
@@ -134,7 +134,7 @@
       //Método para editar un proyecto
       public function editProject(){
         if(isset($_GET['id'])){
-          $id_project = $_GET['id'];
+          $id_project = Controller::descryption($_GET['id']);
           $project = $this->ProjectsModel->projectForId($id_project);
           $client= $this->ClientModel->all_customers();
           

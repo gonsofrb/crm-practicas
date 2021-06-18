@@ -19,7 +19,7 @@
 
         public function index(){
 
-          $tasksToday = $this->TaskModel->todays_unfinished_tasks();
+          print_r($tasksToday = $this->TaskModel->todays_unfinished_tasks());
          
           $clients=$this->ClientModel->all_customers();
 

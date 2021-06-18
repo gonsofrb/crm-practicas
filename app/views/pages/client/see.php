@@ -16,7 +16,10 @@
                         <th>Telefono</th>
                         <th>Email</th>
                         <th>Actualizar</th>
+                        <?php if($_SESSION['rol_crm']>0 && $_SESSION['rol_crm']<3){?>
                         <th>Eliminar</th>
+                        <?php } ?>
+                   
                       
                     </tr>
                 </thead>
@@ -31,8 +34,14 @@
                         <td><?php echo $client->nombre_cliente; ?></td>
                         <td><?php echo $client->telefono; ?></td>
                         <td><?php echo $client->email; ?></td>
-                        <td><a href="<?php echo PATH_URL ?>/Clients/editClient/&id=<?php echo $client->id_cliente; ?>"><i class="fas fa-edit"></i></a></td>
-                        <td><a href="<?php echo PATH_URL ?>/Clients/deleteClient/&i=<?php echo $client->id_cliente; ?>"><i class="fas fa-trash-alt"></i></a></td>
+                        <td><a href="<?php echo PATH_URL ?>/Clients/editClient/&id=<?= Controller::encryption($client->id_cliente); ?>"><i class="fas fa-edit"></i></a></td>
+                <?php if($_SESSION['rol_crm']>0 && $_SESSION['rol_crm']<3){?>
+                     <td><a href="<?php echo PATH_URL ?>/Clients/deleteClient/&i=<?= Controller::encryption($client->id_cliente);  ?>"><i class="fas fa-trash-alt"></i></a></td>
+                <?php } ?>
+                   
+                
+                        
+
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

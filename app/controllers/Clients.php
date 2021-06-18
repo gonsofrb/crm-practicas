@@ -177,7 +177,7 @@
         public function deleteClient(){
             if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-                $id_client = $_GET['i'];
+                $id_client = Controller::descryption($_GET['i']);
                
                 $this->ClientModel->deleteForId($id_client);
 
@@ -189,7 +189,7 @@
         //Método para editar un cliente
         public function editClient(){
            if(isset($_GET['id'])){
-               $id=$_GET['id'];
+               $id=Controller::descryption($_GET['id']);
               $client = $this->ClientModel->clientForId($id);
 
              // print_r($client);

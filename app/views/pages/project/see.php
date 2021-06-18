@@ -30,8 +30,10 @@
                         <td><?= $project->estado; ?></td>
                         <td><?= $project->tarea_asociada; ?></td>
                         <td><?= $project->nota_asociada; ?></td>
-                        <td><a href="<?php echo PATH_URL ?>/Projects/editProject&id=<?php echo $project->id_proyecto; ?>"><i class="fas fa-edit"></i></a>
-                        <a href="<?php echo PATH_URL ?>/Projects/deleteProject&i=<?= $project->id_proyecto; ?>"><i class="fas fa-trash-alt"></i></a>
+                        <td><a href="<?php echo PATH_URL ?>/Projects/editProject&id=<?= Controller::encryption($project->id_proyecto);  ?>"><i class="fas fa-edit"></i></a>
+                        <?php if($_SESSION['rol_crm']>0 && $_SESSION['rol_crm']<3){?>
+                        <a href="<?php echo PATH_URL ?>/Projects/deleteProject&i=<?= Controller::encryption($project->id_proyecto);  ?>"><i class="fas fa-trash-alt"></i></a>
+                        <?php } ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>    
