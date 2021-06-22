@@ -2,6 +2,17 @@
 <?php require_once PATH_APP.'/views/includes/header.php'; ?>
 <?php require_once PATH_APP.'/views/includes/aside.php';   ?>
 
+
+<!--Solo tiene acceso admin -->
+<?php  if($_SESSION['rol_crm']!=1){
+    require_once '../app/controllers/Tasks.php';
+
+    $taks = new Tasks();
+    $taks->index();
+}  ?>
+
+
+
 <div id="info">
     <div class="widget-info">
     <?php if(isset($_SESSION['error_register'])): ?>

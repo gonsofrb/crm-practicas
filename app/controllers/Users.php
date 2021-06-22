@@ -186,6 +186,9 @@ class Users extends Controller{
     public function deleteUser(){
         if($_SERVER['REQUEST_METHOD'] =='GET'){
             $id_user = Controller::descryption($_GET['i']);
+
+            //Comprobar si el usuario existe en la BD
+            
             $this->UsersModel->deleteForId($id_user);
 
             redirect('/Users/see/');

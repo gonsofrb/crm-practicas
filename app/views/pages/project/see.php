@@ -18,7 +18,11 @@
                         <th>Estado</th>
                         <th>Tarea</th>
                         <th>Nota</th>
+
+                <?php if($_SESSION['rol_crm']==1 || $_SESSION['rol_crm']<=2) { ?>
                         <th>Acciones</th>
+
+                <?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,8 +34,12 @@
                         <td><?= $project->estado; ?></td>
                         <td><?= $project->tarea_asociada; ?></td>
                         <td><?= $project->nota_asociada; ?></td>
+
+                        <?php if($_SESSION['rol_crm']==1 || $_SESSION['rol_crm'] == 2) {?>
                         <td><a href="<?php echo PATH_URL ?>/Projects/editProject&id=<?= Controller::encryption($project->id_proyecto);  ?>"><i class="fas fa-edit"></i></a>
-                        <?php if($_SESSION['rol_crm']>0 && $_SESSION['rol_crm']<3){?>
+                        <?php } ?>
+
+                        <?php if($_SESSION['rol_crm']==1){?>
                         <a href="<?php echo PATH_URL ?>/Projects/deleteProject&i=<?= Controller::encryption($project->id_proyecto);  ?>"><i class="fas fa-trash-alt"></i></a>
                         <?php } ?>
                         </td>

@@ -2,7 +2,11 @@
 <?php require_once PATH_APP.'/views/includes/header.php';   ?>
 <?php require_once PATH_APP.'/views/includes/aside.php';   ?>
 
+<?php  if($_SESSION['rol_crm']==4){
+    include_once '../app/views/pages/user/visitor.php';
 
+    
+}  ?>
 <div id="info">
     <div class="widget-info">
         <article class="widget-tabla">
