@@ -35,7 +35,7 @@
                     </li>
                     <li>
                         <span><i class="icono fas fa-calculator"></i></span>
-                        <span><a href="#"class="item" >Presupuestos</a></span>
+                        <span><a href="<?php echo PATH_URL ?>/Presupuesto/index"class="item" >Presupuestos</a></span>
                     </li>
                     
                     <li>
